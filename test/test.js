@@ -1,20 +1,8 @@
-node {
-   def gitcommit
-   stage('Verificación SCM') {
-     checkout scm
-     sh "git rev-parse --short HEAD > .git/commit-id"                        
-     gitcommit = readFile('.git/commit-id').trim()
-   }
-   stage('test') {
-     nodejs(nodeJSInstallationName: 'nodejs') {
-       sh 'npm install --only=dev'
-       sh 'npm test'
-     }
-   }
-   stage('Docker Build & Push') {
-     docker.withRegistry('https://registry.hub.docker.com', 'docker') {
-      def nuestraapp = docker.build("macloujulian/nodejsapp:${gitcommit}", ".")
-      nuestraapp.push()
-     }
-   }
-}
+var assert = require('assert');
+describe('Array', function() {
+  describe('#indexOf()', function() {
+    it('should return -1 when the value is not present', function() {
+      assert.equal(-1, [1,2,3].indexOf(4));
+    });
+  });
+});
